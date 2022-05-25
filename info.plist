@@ -40,11 +40,9 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>uri="{query}"
-
-open "$uri"</string>
+				<string>open "$1"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>type</key>
@@ -85,20 +83,77 @@ open "$uri"</string>
 				<key>runningsubtext</key>
 				<string></string>
 				<key>script</key>
-				<string>on run argv	set query to first item of argv as text			set response to "{\"items\": ["		tell application "Messages"		repeat with p in (participants whose name contains query or full name contains query)			set i to id of p			set n to name of p			set h to handle of p			set fn to full name of p						if the last character of h is not ":" then				set response to response &amp; "
-{"				set response to response &amp; "
-\"uid\": \"" &amp; h &amp; "\","				set response to response &amp; "
-\"title\": \"" &amp; n &amp; " (" &amp; h &amp; ")" &amp; "\","				set response to response &amp; "
-\"subtitle\": \"" &amp; fn &amp; "\","				set response to response &amp; "
-\"arg\": \"imessage://" &amp; h &amp; "\""				set response to response &amp; "
-},"							end if					end repeat				repeat with c in (chats whose name contains query)			set i to id of c			set n to name of c			set a to account of c									set parts to ""			repeat with p in (participants of c)				set parts to parts &amp; (handle of p) &amp; ","			end repeat						if parts is not equal to "" and last character of parts is "," then				set parts to characters 1 thru -2 of parts as string			end if									set response to response &amp; "
-{"			set response to response &amp; "
-\"uid\": \"" &amp; parts &amp; "\","			set response to response &amp; "
-\"title\": \"" &amp; n &amp; "\","			set response to response &amp; "
-\"subtitle\": \"" &amp; parts &amp; "\","			set response to response &amp; "
-\"arg\": \"imessage://open?addresses=" &amp; parts &amp; "\""			set response to response &amp; "
-},"								end repeat			end tell		set response to response &amp; "
-]}"		return response	end run</string>
+				<string>on run argv
+	set query to first item of argv as text
+	
+	
+	set response to "{\"items\": ["
+	
+	tell application "Messages"
+		repeat with p in (participants whose name contains query or full name contains query)
+			set i to id of p
+			set n to name of p
+			set h to handle of p
+			set fn to full name of p
+			
+			if the last character of h is not ":" then
+				set response to response &amp; "
+{"
+				set response to response &amp; "
+\"uid\": \"" &amp; h &amp; "\","
+				set response to response &amp; "
+\"title\": \"" &amp; n &amp; " (" &amp; h &amp; ")" &amp; "\","
+				set response to response &amp; "
+\"subtitle\": \"" &amp; fn &amp; "\","
+				set response to response &amp; "
+\"arg\": \"imessage://" &amp; h &amp; "\""
+				set response to response &amp; "
+},"
+				
+			end if
+			
+		end repeat
+		
+		repeat with c in (chats whose name contains query)
+			set i to id of c
+			set n to name of c
+			set a to account of c
+			
+			
+			set parts to ""
+			repeat with p in (participants of c)
+				set parts to parts &amp; (handle of p) &amp; ","
+			end repeat
+			
+			if parts is not equal to "" and last character of parts is "," then
+				set parts to characters 1 thru -2 of parts as string
+			end if
+			
+			
+			set response to response &amp; "
+{"
+			set response to response &amp; "
+\"uid\": \"" &amp; parts &amp; "\","
+			set response to response &amp; "
+\"title\": \"" &amp; n &amp; "\","
+			set response to response &amp; "
+\"subtitle\": \"" &amp; parts &amp; "\","
+			set response to response &amp; "
+\"arg\": \"imessage://open?addresses=" &amp; parts &amp; "\""
+			set response to response &amp; "
+},"
+			
+			
+		end repeat
+		
+	end tell
+	
+	set response to response &amp; "
+]}"
+	
+	return response
+	
+end run</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -133,8 +188,6 @@ open "$uri"</string>
 		</dict>
 		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
 		<dict>
-			<key>note</key>
-			<string>Alfred 3 now supports JSON as the Script Filter output. This is the recommended output.</string>
 			<key>xpos</key>
 			<integer>70</integer>
 			<key>ypos</key>
