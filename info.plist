@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.charlieschmidt.messages</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>44C42A52-B6AA-4899-ACE7-4F41D9EA73EE</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Charlie Schmidt</string>
+	<key>description</key>
+	<string>Open conversations in Messages</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Open Messages Conversation</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>uri="{query}"
+
+open "$uri"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>5</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>44C42A52-B6AA-4899-ACE7-4F41D9EA73EE</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>msg</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>on run argv	set query to first item of argv as text			set response to "{\"items\": ["		tell application "Messages"		repeat with p in (participants whose name contains query or full name contains query)			set i to id of p			set n to name of p			set h to handle of p			set fn to full name of p						if the last character of h is not ":" then				set response to response &amp; "
+{"				set response to response &amp; "
+\"uid\": \"" &amp; h &amp; "\","				set response to response &amp; "
+\"title\": \"" &amp; n &amp; " (" &amp; h &amp; ")" &amp; "\","				set response to response &amp; "
+\"subtitle\": \"" &amp; fn &amp; "\","				set response to response &amp; "
+\"arg\": \"imessage://" &amp; h &amp; "\""				set response to response &amp; "
+},"							end if					end repeat				repeat with c in (chats whose name contains query)			set i to id of c			set n to name of c			set a to account of c									set parts to ""			repeat with p in (participants of c)				set parts to parts &amp; (handle of p) &amp; ","			end repeat						if parts is not equal to "" and last character of parts is "," then				set parts to characters 1 thru -2 of parts as string			end if									set response to response &amp; "
+{"			set response to response &amp; "
+\"uid\": \"" &amp; parts &amp; "\","			set response to response &amp; "
+\"title\": \"" &amp; n &amp; "\","			set response to response &amp; "
+\"subtitle\": \"" &amp; parts &amp; "\","			set response to response &amp; "
+\"arg\": \"imessage://open?addresses=" &amp; parts &amp; "\""			set response to response &amp; "
+},"								end repeat			end tell		set response to response &amp; "
+]}"		return response	end run</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>test.sh</string>
+				<key>subtext</key>
+				<string>Open a conversation in Messages</string>
+				<key>title</key>
+				<string>Message...</string>
+				<key>type</key>
+				<integer>6</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>50B0CD10-4D52-4898-9C05-DD3A34A829C3</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Open an existing conversation in Messages</string>
+	<key>uidata</key>
+	<dict>
+		<key>44C42A52-B6AA-4899-ACE7-4F41D9EA73EE</key>
+		<dict>
+			<key>xpos</key>
+			<integer>330</integer>
+			<key>ypos</key>
+			<integer>50</integer>
+		</dict>
+		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
+		<dict>
+			<key>note</key>
+			<string>Alfred 3 now supports JSON as the Script Filter output. This is the recommended output.</string>
+			<key>xpos</key>
+			<integer>70</integer>
+			<key>ypos</key>
+			<integer>50</integer>
+		</dict>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>1.0</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
