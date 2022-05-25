@@ -1,6 +1,10 @@
 # alfred-open-messages-conversation
 Open an existing conversation in Messages with Alfred
 
+# Download
+
+[Download](https://github.com/charlieschmidt/alfred-open-messages-conversation/releases/tag/v1.0)
+
 # Commands
 * msg *search*
   
